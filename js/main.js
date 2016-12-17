@@ -14,3 +14,4 @@ update: function(){
 
 game.state.add('GameState', GameState);
 game.state.start('GameState');
+qweqweqw
