@@ -42,7 +42,7 @@ function createPlayer(x, y) {
     player.body.collideWorldBounds = true;
 }
 function playerUpdate() {
-    game.physics.arcade.collide(players, obstacles/* su kuo collinsionai vyksta*/)
+    game.physics.arcade.collide(players, obstacles)
     players.forEach(function (p) {
         p.body.velocity.x = 0;
         if (cursors.left.isDown) {
@@ -51,12 +51,22 @@ function playerUpdate() {
         else if (cursors.right.isDown) {
             p.body.velocity.x = 200;
         }
-        else if (cursors.up.isDown) {
+        //jump
+        if (cursors.up.isDown && p.body.touching.down) {
             p.body.velocity.y = -200;
         }
     });
 }
 function createObstacle() {
-    var brick1 = obstacles.create(300, 522, 'brick');
+    var brick1 = obstacles.create(300, game.world.height - 77, 'brick');
     brick1.body.immovable = true;
+    var brick2 = obstacles.create(364, game.world.height - 141, 'brick');
+    brick2.body.immovable = true;
+    var brick3 = obstacles.create(428, game.world.height - 77, 'brick');
+    brick3.body.immovable = true;
+    var brick4 = obstacles.create(364, game.world.height - 77, 'brick');
+    brick4.body.immovable = true;
+    var floor = obstacles.create(0, game.world.height - 13);
+    floor.scale.x = game.world.width;
+    floor.body.immovable = true;
 }
