@@ -1,6 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var cursors;
+var background;
 
 //visų reikalingų assetų užloadinimas
 function preload() {
@@ -14,6 +15,7 @@ function preload() {
 //atvaizdavimas vykdomas po užloadinimo
 function create() {
 
+    //sounds
     music = game.add.audio('mainTheme');
     music.play('', 0, 0.75, true);
 
@@ -43,7 +45,7 @@ function update() {
 function createPlayer(x, y) {
     var player = players.create(x, y, 'player');
     player.body.bounce.y = 0.3;
-    player.body.gravity.y = 800;
+    player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
 }
 function playerUpdate() {
@@ -60,7 +62,7 @@ function playerUpdate() {
         if (cursors.up.isDown && p.body.touching.down) {
             var stepSound = game.add.audio('step');
             stepSound.play();
-            p.body.velocity.y = -350;
+            p.body.velocity.y = -400;
         }
     });
 }
