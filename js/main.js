@@ -4,6 +4,8 @@ var cursors;
 
 //visų reikalingų assetų užloadinimas
 function preload() {
+    game.load.audio('mainTheme', ['assets/sounds/mainTheme.ogg', 'assets/sounds/mainTheme.wav', 'assets/sounds/mainTheme.mp3']);
+    game.load.audio('step', 'assets/sounds/step.wav')
     game.load.image('background', 'assets/images/background.png');
     game.load.image('player', 'assets/images/veikejas.png');
     game.load.image('brick', 'assets/images/brick.jpg');
@@ -11,6 +13,9 @@ function preload() {
 
 //atvaizdavimas vykdomas po užloadinimo
 function create() {
+
+    music = game.add.audio('mainTheme');
+    music.play('', 0, 0.75, true);
 
     //background
     game.background = game.add.sprite(0, 0, 'background');
@@ -38,7 +43,7 @@ function update() {
 function createPlayer(x, y) {
     var player = players.create(x, y, 'player');
     player.body.bounce.y = 0.3;
-    player.body.gravity.y = 300;
+    player.body.gravity.y = 800;
     player.body.collideWorldBounds = true;
 }
 function playerUpdate() {
@@ -53,7 +58,9 @@ function playerUpdate() {
         }
         //jump
         if (cursors.up.isDown && p.body.touching.down) {
-            p.body.velocity.y = -200;
+            var stepSound = game.add.audio('step');
+            stepSound.play();
+            p.body.velocity.y = -350;
         }
     });
 }
