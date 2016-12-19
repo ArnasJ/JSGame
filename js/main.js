@@ -6,10 +6,11 @@ var background;
 //visų reikalingų assetų užloadinimas
 function preload() {
     game.load.audio('mainTheme', ['assets/sounds/mainTheme.ogg', 'assets/sounds/mainTheme.wav', 'assets/sounds/mainTheme.mp3']);
-    game.load.audio('step', 'assets/sounds/step.wav')
+    game.load.audio('step', 'assets/sounds/step.wav');
     game.load.image('background', 'assets/images/background.png');
     game.load.image('player', 'assets/images/veikejas.png');
     game.load.image('brick', 'assets/images/brick.jpg');
+    game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
 }
 
 //atvaizdavimas vykdomas po užloadinimo
