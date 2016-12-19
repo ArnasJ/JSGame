@@ -1,0 +1,21 @@
+.img {
+margin: auto;
+}
+canvas {
+    display: block;
+    margin: auto;
+}
+   body {
+            padding: 0px;
+            margin: 0px;
+        background: black; 
+        text-align: center;        
+        }
+ p {
+            color: white;
+            font-family: Courier New, Courier, monospace;
+            font-size: 160%;
+ }
+        
+    
+        
