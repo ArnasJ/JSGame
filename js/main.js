@@ -4,9 +4,6 @@ var cursors;
 var background;
 var map;
 var layer;
-var leftButton;
-var rightButton;
-var upButton;
 
 
 //visų reikalingų assetų užloadinimas
@@ -20,6 +17,7 @@ function preload() {
     game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
     game.load.tilemap('map', 'assets/maps/Level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tileset', 'assets/images/spritesheet_ground32.png')
+    game.load.spritesheet('playersheet', 'assets/images/playersheet.png', 140, 175)
 }
 
 //atvaizdavimas vykdomas po užloadinimo
@@ -41,18 +39,18 @@ function create() {
     layer.resizeWorld();
 
     //players
-    players = game.add.group();
-    //player2 = game.add.group();
-    players.enableBody = true;
-   // player2.enableBody = true;
-    createPlayer(2 * 64, 2 * 64);
+    player1 = game.add.group();
+    player2 = game.add.group();
+    player1.enableBody = true;
+    player2.enableBody = true;
+    createPlayer(2 * 64, 2 * 128);
     createPlayer2(2 * 64, 2 * 64);
-    
+
 
     //animations
-    //spSheet = game.add.sprite(128, 128, "spSheet");
-    //spSheet.animations.add('idle', [0, 1, 2, 3, 10], 12, true);
-    //spSheet.animations.play('idle');
+    spSheet = game.add.sprite(128, 128, "playersheet");
+    spSheet.animations.add('idle', [2, 3], 2, true);
+    spSheet.animations.play('idle');
 
     /* //obstacles
      obstacles = game.add.group();
@@ -61,36 +59,35 @@ function create() {
 
     //keyboard input
     cursors = game.input.keyboard.createCursorKeys();
-    upButton = game.input.keyboard.addKey(Phaser.keyboard.W);
-    leftButton = game.input.keyboard.addKey(Phaser.keyboard.A);
-    rightButton = game.input.keyboard.addKey(Phaser.keyboard.D);
+    upButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    leftButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    rightButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
 
 }
 
 function update() {
     playerUpdate();
-    player2Update();
+    //  player2Update();
 }
 
 function createPlayer(x, y) {
-    var player = players.create(x, y, 'player');
+    var player = player1.create(x, y, 'player');
     game.physics.enable(player);
     player.body.bounce.y = 0.3;
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
 }
-    function createPlayer2(x, y) {
-    var player2 = players.create(x, y, 'player2');
-    game.physics.enable(player2);
-    player2.body.bounce.y = 0.3;
-    player2.body.gravity.y = 1000;
-    player2.body.collideWorldBounds = true;
-    game.camera.follow(player2);
+function createPlayer2(x, y) {
+    var playerdu = player2.create(x, y, 'player2');
+    game.physics.enable(playerdu);
+    playerdu.body.bounce.y = 0.3;
+    playerdu.body.gravity.y = 1000;
+    playerdu.body.collideWorldBounds = true;
 }
 function playerUpdate() {
-    game.physics.arcade.collide(players, layer)
-    players.forEach(function (p) {
+    game.physics.arcade.collide(player1, layer)
+    player1.forEach(function (p) {
         p.body.velocity.x = 0;
         if (cursors.left.isDown) {
             p.body.velocity.x = -200;
@@ -104,22 +101,22 @@ function playerUpdate() {
             stepSound.play();
             p.body.velocity.y = -400;
         }
-        });
+    });
 }
 
 function player2Update() {
-    game.physics.arcade.collide(players, layer)
-    players.forEach(function (p) {
+    game.physics.arcade.collide(player2, layer)
+    player2.forEach(function (p) {
         p.body.velocity.x = 0;
         if (leftButton.isDown) {
-            player2.body.velocity.x = -200;
+            p.body.velocity.x = -200;
         } else if (rightButton.isDown) {
-            player2.body.velocity.x = 200;
+            p.body.velocity.x = 200;
         }
-        if (upButton.isDown && player2.body.onFloor()) {
+        if (upButton.isDown && p.body.onFloor()) {
             var stepSound = game.add.audio('step');
             stepSound.play();
-            player2.body.velocity.y = -400;
+            p.body.velocity.y = -400;
         }
     });
 }
