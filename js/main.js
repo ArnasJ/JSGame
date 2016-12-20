@@ -76,6 +76,8 @@ function createPlayer(x, y) {
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
+}
+    function createPlayer2(x, y) {
     var player2 = players.create(x, y, 'player2');
     game.physics.enable(player2);
     player2.body.bounce.y = 0.3;
