@@ -12,6 +12,7 @@ function preload() {
     game.load.audio('step', 'assets/sounds/step.wav');
     game.load.image('background', 'assets/images/background.png');
     game.load.image('player', 'assets/images/veikejas.png');
+    game.load.image('player2', 'assets/images/veikejas2.png');
     game.load.image('brick', 'assets/images/brick.jpg');
     game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
     game.load.tilemap('map', 'assets/maps/Level1.json', null, Phaser.Tilemap.TILED_JSON);
@@ -38,7 +39,9 @@ function create() {
 
     //players
     players = game.add.group();
+    player2 = game.add.group();
     players.enableBody = true;
+    player2.enableBody = true;
     createPlayer(2 * 64, 2 * 64);
     
 
@@ -54,6 +57,9 @@ function create() {
 
     //keyboard input
     cursors = game.input.keyboard.createCursorKeys();
+    upButton = game.input.keyboard.addKey(Phaser.keyboard.W);
+    leftButton = game.input.keyboard.addKey(Phaser.keyboard.A);
+    rightButton = game.input.keyboard.addKey(Phaser.keyboard.D);
 
 }
 
@@ -68,6 +74,12 @@ function createPlayer(x, y) {
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
+    var player2 = player2.create(x, y, 'player2');
+    game.physics.enable(player2);
+    player2.body.bounce.y = 0.3;
+    player2.body.gravity.y = 1000;
+    player2.body.collideWorldBounds = true;
+    game.camera.follow(player2);
 }
 function playerUpdate() {
     game.physics.arcade.collide(players, layer)
@@ -84,6 +96,16 @@ function playerUpdate() {
             var stepSound = game.add.audio('step');
             stepSound.play();
             p.body.velocity.y = -400;
+        }
+        if (leftButton.isDown) {
+            player2.body.velocity.x = -200;
+        } else if (rightButton.isDown) {
+            player2.body.velocity.x = 200;
+        }
+        if (upButton.isDown && player2.body.onFloor()) {
+            var stepSound = game.add.audio('step');
+            stepSound.play();
+            player2.body.velocity.y = -400;
         }
     });
 }
