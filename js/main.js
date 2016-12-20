@@ -4,6 +4,9 @@ var cursors;
 var background;
 var map;
 var layer;
+var leftButton;
+var rightButton;
+var upButton;
 
 
 //visų reikalingų assetų užloadinimas
@@ -104,7 +107,7 @@ function playerUpdate() {
         });
 }
 
-            function player2Update() {
+function player2Update() {
     game.physics.arcade.collide(players, layer)
     players.forEach(function (p) {
         p.body.velocity.x = 0;
