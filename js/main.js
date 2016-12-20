@@ -15,7 +15,7 @@ function preload() {
     game.load.image('brick', 'assets/images/brick.jpg');
     game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
     game.load.tilemap('map', 'assets/maps/Level1.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tileset', 'assets/images/spritesheet_ground.png')
+    game.load.image('tileset', 'assets/images/spritesheet_ground32.png')
 }
 
 //atvaizdavimas vykdomas po užloadinimo
