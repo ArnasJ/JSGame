@@ -25,7 +25,7 @@
          "imageheight":512,
          "imagewidth":256,
          "margin":0,
-         "name":"title",
+         "name":"tileset",
          "spacing":0,
          "tilecount":128,
          "tileheight":32,
