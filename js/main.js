@@ -39,10 +39,11 @@ function create() {
 
     //players
     players = game.add.group();
-    player2 = game.add.group();
+    //player2 = game.add.group();
     players.enableBody = true;
-    player2.enableBody = true;
+   // player2.enableBody = true;
     createPlayer(2 * 64, 2 * 64);
+    createPlayer2(2 * 64, 2 * 64);
     
 
     //animations
@@ -65,6 +66,7 @@ function create() {
 
 function update() {
     playerUpdate();
+    player2Update();
 }
 
 function createPlayer(x, y) {
@@ -74,7 +76,7 @@ function createPlayer(x, y) {
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
-    var player2 = player2.create(x, y, 'player2');
+    var player2 = players.create(x, y, 'player2');
     game.physics.enable(player2);
     player2.body.bounce.y = 0.3;
     player2.body.gravity.y = 1000;
@@ -97,6 +99,13 @@ function playerUpdate() {
             stepSound.play();
             p.body.velocity.y = -400;
         }
+        });
+}
+
+            function player2Update() {
+    game.physics.arcade.collide(players, layer)
+    players.forEach(function (p) {
+        p.body.velocity.x = 0;
         if (leftButton.isDown) {
             player2.body.velocity.x = -200;
         } else if (rightButton.isDown) {
