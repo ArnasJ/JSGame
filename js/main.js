@@ -22,9 +22,9 @@ function preload() {
 
 //atvaizdavimas vykdomas po užloadinimo
 
-function create () {
+function create() {
 
-//sounds
+    //sounds
     music = game.add.audio('mainTheme');
     music.play('', 0, 0.5, true);
 
@@ -40,7 +40,7 @@ function create () {
     layer.resizeWorld();
 
 
-// 1 PLAYER
+    // 1 PLAYER
     player = game.add.sprite(2 * 64, 2 * 64, 'player');
     //player.anchor.setTo(0.5, 0.5);
     game.physics.enable(player);
@@ -49,14 +49,13 @@ function create () {
     game.camera.follow(player);
 
     //2 PLAYER
-player2 = game.add.sprite(2 * 128, 2 * 128, 'player2');
+    player2 = game.add.sprite(2 * 128, 2 * 128, 'player2');
     //player.anchor.setTo(0.5, 0.5);
     game.physics.enable(player2);
     player2.body.gravity.y = 1000;
     player2.body.collideWorldBounds = true;
-    game.camera.follow(player2);
-    
-     //keyboard input
+
+    //keyboard input
     cursor1 = game.input.keyboard.createCursorKeys();
     upButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
     leftButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -64,24 +63,25 @@ player2 = game.add.sprite(2 * 128, 2 * 128, 'player2');
 }
 
 function update() {
+
+    //collisions
     game.physics.arcade.collide(player, player2);
-   game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(player2, layer);
 
-//2 PLAYER
-   game.physics.arcade.collide(player2, layer);
 
-    if (cursor1 .left.isDown) {
+    //player1 controls
+    if (cursor1.left.isDown) {
         player.body.velocity.x = -200;
     } else if (cursor1.right.isDown) {
 
         player.body.velocity.x = 200;
     } else {
 
-       player.body.velocity.x = 0;
+        player.body.velocity.x = 0;
     }
-///////////////
 
-  //SECOND PLAYER  
+    //SECOND PLAYER  
     if (leftButton.isDown) {
         player2.body.velocity.x = -200;
     } else if (rightButton.isDown) {
@@ -89,26 +89,27 @@ function update() {
     } else {
         player2.body.velocity.x = 0;
     }
-//////////////
-   if (cursor1 .up.isDown && (player.body.onFloor() || player.body.touching.down)) {
-       var stepSound = game.add.audio('step');
-            stepSound.play();
-            player.body.velocity.y = -400;
-    	
+
+    //jump player1
+    if (cursor1.up.isDown && (player.body.onFloor() || player.body.touching.down)) {
+        var stepSound = game.add.audio('step');
+        stepSound.play();
+        player.body.velocity.y = -400;
+
     }
-   ///////////////// 
-   //SECOND PLAYER
+ 
+    //jump player2
     if (upButton.isDown && (player2.body.onFloor() || player2.body.touching.down)) {
-    	 var stepSound = game.add.audio('step');
-            stepSound.play();
-            player2.body.velocity.y = -400;
+        var stepSound = game.add.audio('step');
+        stepSound.play();
+        player2.body.velocity.y = -400;
     }
- /////////////////
-    
+    /////////////////
+
 
 }
 
-    
+
 /*function createObstacle() {
     var brick1 = obstacles.create(300, game.world.height - 77, 'brick');
     brick1.body.immovable = true;
