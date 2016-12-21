@@ -1,14 +1,11 @@
 ## Planuojami darbai:
-
-*  Parallax backgroundas
+*  main.js išskaidymas į atskirus js 
 *  Main Menu
 *  2-3 leveliai
 *  Pabaigos užrašas
 *  Parinkti tinkami assetai
-*  Priešai/užduotys
 *  Kliūtys (vanduo, spygliai)
-*  Veikėjų animacijos
-*  main.js išskaidymas į atskirus js 
+
 
 ## Padaryti darbai:
 *  Sukurtas playeris
@@ -17,3 +14,6 @@
 *  Assetų užloadinimas
 *  Tile map struktūra
 *  Index.html sutvarkytas
+*  Parallax backgroundas
+*  Priešai/užduotys
+*  Veikėjų animacijos

@@ -14,6 +14,7 @@ function preload() {
     game.load.image('player', 'assets/images/veikejas.png');
     game.load.image('player2', 'assets/images/veikejas2.png');
     game.load.image('brick', 'assets/images/brick.jpg');
+    game.load.image('box', 'assets/images/box.png');
     game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
     game.load.tilemap('map', 'assets/maps/Level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tileset', 'assets/images/spritesheet_ground32.png');
@@ -93,6 +94,13 @@ function create() {
     upButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
     leftButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
     rightButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
+
+    //CREATE BOXES
+
+    boxes = game.add.group();
+    boxes.enableBody = true;
+    game.physics.enable(boxes);
+    createBox();
 }
 
 function update() {
@@ -105,6 +113,13 @@ function update() {
     game.physics.arcade.collide(player, player2);
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(player2, layer);
+    game.physics.arcade.collide(player2, boxes);
+    game.physics.arcade.collide(player, boxes);
+    game.physics.arcade.collide(boxes, layer);
+    game.physics.arcade.collide(boxes, boxes);
+
+    //update functions
+    updateBox();
 
 
     //player1 controls
@@ -146,7 +161,7 @@ function update() {
     }
 
     //jump player2
-   if (upButton.isDown && (player2.body.onFloor() || player2.body.touching.down)) {
+    if (upButton.isDown && (player2.body.onFloor() || player2.body.touching.down)) {
         player2.animations.play('jump');
         var stepSound = game.add.audio('step');
         stepSound.play();
@@ -159,7 +174,24 @@ function update() {
     }
 
 }
+//CREATE BOX, PHYSICS, POSITION
+function createBox() {
+    var box1 = boxes.create(73 * 32, 4 * 32, 'box');
+    game.physics.enable(box1);
+    box1.body.gravity.y = 1000;
+    box1.body.collideWorldBounds = true;
+    
+    var box2 = boxes.create(77 * 32, 10 * 32, 'box');
+    game.physics.enable(box2);
+    box2.body.gravity.y = 1000;
+    box2.body.collideWorldBounds = true;
+}
 
+function updateBox() {
+    boxes.forEach(function (b) {
+        b.body.velocity.x = 0;
+    })
+}
 
 /*function createObstacle() {
     var brick1 = obstacles.create(300, game.world.height - 77, 'brick');
