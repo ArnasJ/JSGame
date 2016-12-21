@@ -77,6 +77,7 @@ function create() {
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
 
+
     //2 PLAYER
     player2 = game.add.sprite(2 * 128, 2 * 128, 'playersheet');
     player2.anchor.setTo(0.5, 0);
