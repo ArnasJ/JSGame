@@ -79,6 +79,7 @@ function update() {
        player.body.velocity.x = 0;
     }
 ///////////////
+
   //SECOND PLAYER  
     if (leftButton.isDown) {
         player2.body.velocity.x = -200;
