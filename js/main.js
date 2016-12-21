@@ -64,6 +64,7 @@ player2 = game.add.sprite(2 * 128, 2 * 128, 'player2');
 }
 
 function update() {
+    game.physics.arcade.collide(player, player2);
    game.physics.arcade.collide(player, layer);
 
 //2 PLAYER
@@ -89,7 +90,7 @@ function update() {
         player2.body.velocity.x = 0;
     }
 //////////////
-   if (cursor1 .up.isDown && player.body.onFloor()) {
+   if (cursor1 .up.isDown && (player.body.onFloor() || player.body.touching.down)) {
        var stepSound = game.add.audio('step');
             stepSound.play();
             player.body.velocity.y = -400;
@@ -97,7 +98,7 @@ function update() {
     }
    ///////////////// 
    //SECOND PLAYER
-    if (upButton.isDown && player2.body.onFloor()) {
+    if (upButton.isDown && (player2.body.onFloor() || player2.body.touching.down)) {
     	 var stepSound = game.add.audio('step');
             stepSound.play();
             player2.body.velocity.y = -400;
