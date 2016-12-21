@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(1410, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var cursor1;
 var background;
@@ -68,7 +68,7 @@ function create() {
 
 
     // 1 PLAYER
-    player = game.add.sprite(2 * 64, 2 * 64, 'playersheet');
+    player = game.add.sprite(2 * 32, 15 * 32, 'playersheet');
     player.anchor.setTo(0.5, 0);
     player.animations.add('idLe', [4], 1, true);
     player.animations.add('jump', [5], 1, true);
@@ -80,7 +80,7 @@ function create() {
 
 
     //2 PLAYER
-    player2 = game.add.sprite(2 * 128, 2 * 128, 'playersheet');
+    player2 = game.add.sprite(5 * 32, 15 * 32, 'playersheet');
     player2.anchor.setTo(0.5, 0);
     player2.animations.add('idLe', [0], 1, true);
     player2.animations.add('jump', [1], 1, true);
