@@ -1,23 +1,28 @@
-var game = new Phaser.Game(1410, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(1200, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var cursor1;
 var background;
 var map;
 var layer;
+var props;
 
 
 //visų reikalingų assetų užloadinimas
 function preload() {
-    game.load.audio('mainTheme', ['assets/sounds/mainTheme.ogg', 'assets/sounds/mainTheme.wav', 'assets/sounds/mainTheme.mp3']);
+    game.load.audio('mainTheme', ['assets/sounds/mainTheme.ogg', /*'assets/sounds/mainTheme.wav', */'assets/sounds/mainTheme.mp3']);
     game.load.audio('step', 'assets/sounds/step.wav');
-    game.load.image('background', 'assets/images/background.png');
-    game.load.image('player', 'assets/images/veikejas.png');
-    game.load.image('player2', 'assets/images/veikejas2.png');
+    //game.load.image('background', 'assets/images/background.png');
+    //game.load.image('player', 'assets/images/veikejas.png');
+    //game.load.image('player2', 'assets/images/veikejas2.png');
     game.load.image('brick', 'assets/images/brick.jpg');
     game.load.image('box', 'assets/images/box.png');
-    game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
+    game.load.image('easter', 'assets/images/easter.png');
+    game.load.image('door', 'assets/images/door.png');
+    //game.load.spritesheet('spSheet', 'assets/images/players.png', 1024, 2048, 55);
     game.load.tilemap('map', 'assets/maps/Level1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level1props', 'assets/maps/level1props.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tileset', 'assets/images/spritesheet_ground32.png');
+    game.load.image('props', 'assets/images/spritesheet_tiles.png');
     game.load.spritesheet('playersheet', 'assets/images/playersheet.png', 56, 70);
     game.load.image('backFar', 'assets/images/backFar.png');
     game.load.image('backMid', 'assets/images/backMid.png');
@@ -59,12 +64,47 @@ function create() {
     //physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    // Create a label to use as a button
+    pause_label = game.add.text(1 * 32, 1 * 32, 'Pause', { font: '24px Arial', fill: '#000' });
+   
+    pause_label.inputEnabled = true;
+    pause_label.events.onInputUp.add(function () {
+
+       
+        // When the paus button is pressed, we pause the game
+        
+        this.game.paused = true;},this);
+        this.game.input.onDown.add(function () {if(this.game.paused)this.game.paused = false;},this);
+
+         pause_label.fixedToCamera = true;
+
     //tilemap
     map = game.add.tilemap('map');
     map.addTilesetImage('tileset');
     map.setCollisionBetween(1, 2048);
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
+
+    //prop smap
+    props = game.add.tilemap('level1props');
+    props.addTilesetImage('props');
+    layer2 = props.createLayer(0);
+    layer2.resizeWorld();
+
+    //Finish Area
+    g = game.add.sprite(118 * 32, 10 * 32, 'door');
+    theEnd = game.add.text(1 * 32, 3 * 32, 'Level 1', { font: '36px Stencil', fill: '#FFFFFF' });
+    g.anchor.setTo(0.5, 0);
+    game.physics.enable(g);
+    g.body.gravity.y = 0;
+    g.body.collideWorldBounds = true;
+    g.body.immovable = true;
+
+    e = game.add.sprite(0, 10 * 32, 'easter');
+    game.physics.enable(e);
+    e.body.gravity.y = 0;
+    e.body.collideWorldBounds = true;
+    e.body.immovable = true;
 
 
     // 1 PLAYER
@@ -101,6 +141,9 @@ function create() {
     boxes.enableBody = true;
     game.physics.enable(boxes);
     createBox();
+
+
+
 }
 
 function update() {
@@ -121,6 +164,15 @@ function update() {
     //update functions
     updateBox();
 
+    //finish
+    if (game.physics.arcade.overlap(player, g, null, null, this) && game.physics.arcade.overlap(player2, g, null, null, this)) {
+        game.add.text(105 * 32, 7 * 32, 'LEVEL 1 COMPLETE ', { font: '36px Stencil', fill: '#000000' })
+    }
+
+    //easter
+    if (game.physics.arcade.overlap(player, e, null, null, this)) {
+        game.add.text(3 * 32, 3 * 32, 'SECRETS UNLOCKED', { font: '36px Stencil', fill: '#000000' })
+    }
 
     //player1 controls
     if (cursor1.left.isDown) {
@@ -180,7 +232,7 @@ function createBox() {
     game.physics.enable(box1);
     box1.body.gravity.y = 1000;
     box1.body.collideWorldBounds = true;
-    
+
     var box2 = boxes.create(71 * 32, 10 * 32, 'box');
     game.physics.enable(box2);
     box2.body.gravity.y = 1000;
@@ -202,6 +254,7 @@ function updateBox() {
         b.body.velocity.x = 0;
     })
 }
+
 
 /*function createObstacle() {
     var brick1 = obstacles.create(300, game.world.height - 77, 'brick');
