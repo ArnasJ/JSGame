@@ -37,21 +37,21 @@ function create() {
 
     this.backFar = this.game.add.tileSprite(0,
         0,
-        100 * 32,
+        120 * 32,
         800,
         'backFar'
     );
 
     this.backMid = this.game.add.tileSprite(0,
         0,
-        100 * 32,
+        120 * 32,
         800,
         'backMid'
     );
 
     this.backClose = this.game.add.tileSprite(0,
         0,
-        100 * 32,
+        120 * 32,
         800,
         'backClose'
     );
@@ -106,8 +106,8 @@ function create() {
 function update() {
 
     this.backFar.tilePosition.x = game.camera.x * 0.8;
-    this.backMid.tilePosition.x = game.camera.x * 0.5;
-    this.backClose.tilePosition.x = game.camera.x * 0.2;
+    this.backMid.tilePosition.x = game.camera.x * 0.6;
+    this.backClose.tilePosition.x = game.camera.x * 0.4;
 
     //collisions
     game.physics.arcade.collide(player, player2);
@@ -176,15 +176,25 @@ function update() {
 }
 //CREATE BOX, PHYSICS, POSITION
 function createBox() {
-    var box1 = boxes.create(73 * 32, 4 * 32, 'box');
+    var box1 = boxes.create(91 * 32, 7 * 32, 'box');
     game.physics.enable(box1);
     box1.body.gravity.y = 1000;
     box1.body.collideWorldBounds = true;
     
-    var box2 = boxes.create(77 * 32, 10 * 32, 'box');
+    var box2 = boxes.create(71 * 32, 10 * 32, 'box');
     game.physics.enable(box2);
     box2.body.gravity.y = 1000;
     box2.body.collideWorldBounds = true;
+
+    var box3 = boxes.create(28 * 32, 9 * 32, 'box');
+    game.physics.enable(box3);
+    box3.body.gravity.y = 1000;
+    box3.body.collideWorldBounds = true;
+
+    var box4 = boxes.create(52 * 32, 17 * 32, 'box');
+    game.physics.enable(box3);
+    box4.body.gravity.y = 1000;
+    box4.body.collideWorldBounds = true;
 }
 
 function updateBox() {
