@@ -28,9 +28,13 @@ canvas {
  p {
 
             color: white;
+<<<<<<< HEAD
 
             font-family: 'Segoe UI';
 
+=======
+            font-family: 'Segoe UI';
+>>>>>>> cb009654083352dbdd92977ea9161b08242afd5f
             font-size: 160%;
 
  }
